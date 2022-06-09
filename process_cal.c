@@ -1,8 +1,5 @@
 /*
-Student Name: Bashar Jirjees
-Student ID: V00947950
-Course: SENG 265
-Subject: Assignment 1
+Author: Bashar Jirjees
 */
 
 
@@ -47,25 +44,22 @@ static void DataOutput(char* [] ,char*[], char[MAX_EVENTS][MAX_CHARinDATE],
 char[MAX_EVENTS][MAX_CHARinDATE]);
 
 static void fullSortDisplay (char *[], char [], char []);
-long int Strlen_M_Y_DW_D = 0; /*Global variable used to keep track of month,
-                                day, and year characters lengths for adjusting dashes 
-                                output. */
+long int Strlen_M_Y_DW_D = 0;
 
 
-//Main function.
-int
-main (int argc, char *argv[])
+// main function to adjust the passed command line argumets and calls necessary methods.
+int main (int argc, char *argv[])
 {
  
- char filename[100] = {};   //File name array.
- char startdate[100] = {}; //Start date boundary array.
- char enddate[100] = {};  //End date boundary array.
- strcpy(filename,argv[3] + 7); //Stroing file name.
- strcpy(enddate,argv[2] + 10); //Storing start date.
- strcpy(startdate,argv[1] + 12); //Storing end date.
+ char filename[100] = {};  
+ char startdate[100] = {}; 
+ char enddate[100] = {};  
+ strcpy(filename,argv[3] + 7); 
+ strcpy(enddate,argv[2] + 10); 
+ strcpy(startdate,argv[1] + 12); 
 
 
-  //Reading the xml file contents, parsing them and adjusting for output.
+  
   readFileandFullDisplay (filename, startdate, enddate);
   exit (0);
 }
@@ -74,8 +68,8 @@ main (int argc, char *argv[])
 static FILE* FileCheck(char filename[])
 {
       
-  FILE *file;		  //Pointer to controll the file handling  process.
-  file = fopen (filename, "r");	//Reading the file.
+  FILE *file;
+  file = fopen (filename, "r");	
   if(file == NULL)
   {
     perror("FILE IS EMPTY OR NON-EXISTENT");
@@ -86,25 +80,23 @@ static FILE* FileCheck(char filename[])
 }
 
 //Function to read the xml file data, parsing and ouputting them.
-static void
-readFileandFullDisplay (char filename[],char startdate[], char enddate[])
+static void readFileandFullDisplay (char filename[],char startdate[], char enddate[])
 {
 
-  int ind1 = 0;	 //Array index when reading the file line by line.
-  int ind2 = 0;	//Array index when storing file lines.
-  char apr[MAX_NUMBERofLINES][MAX_CHARinLINE];	/* 2D Array to store all the 
-                                                   lines of the file before modification. */
-  char *ptr[MAX_CHARinLINE] = { }; /* Array to store each pointer value of 
-                        	      specific file line after modification. */
-  int counter = 0; //File reader counter.
-  FILE *file = FileCheck(filename); //Checking if the file is readable or not.
+  int ind1 = 0;
+  int ind2 = 0;	
+  char apr[MAX_NUMBERofLINES][MAX_CHARinLINE];	
+  char *ptr[MAX_CHARinLINE] = { }; 
+  int counter = 0; 
+  FILE *file = FileCheck(filename); 
 
-  char *temp = NULL;  //Pointer to each file line.
+  char *temp = NULL;  
   
-  //Reading file line by line.
+ 
   while (fgets (apr[ind1], sizeof apr[ind1], file) != NULL)	
 
     {
+	  
       //Reading and adjusting description line data.
       if (counter == 2)
 	{
@@ -112,6 +104,7 @@ readFileandFullDisplay (char filename[],char startdate[], char enddate[])
 	  temp[strlen (temp) - 16] = '\0';
 	  ptr[ind2++] = temp;
 	}
+	  
       //Reading and adjusitng timezone line data.
       if (counter == 3)
 	{
@@ -119,6 +112,7 @@ readFileandFullDisplay (char filename[],char startdate[], char enddate[])
 	  temp[strlen (temp) - 13] = '\0';
 	  ptr[ind2++] = temp;
 	}
+	  
       //Reading and adjusting location line data.
       if (counter == 4)
 	{
@@ -126,6 +120,7 @@ readFileandFullDisplay (char filename[],char startdate[], char enddate[])
 	  temp[strlen (temp) - 13] = '\0';
 	  ptr[ind2++] = temp;
 	}
+	  
       //Reading and adjusting day line data.
       if (counter == 5)
 	{
@@ -133,6 +128,7 @@ readFileandFullDisplay (char filename[],char startdate[], char enddate[])
 	  temp[strlen (temp) - 8] = '\0';
 	  ptr[ind2++] = temp;
 	}
+	  
       //Reading and adjusting month line data.
       if (counter == 6)
 	{
@@ -140,6 +136,7 @@ readFileandFullDisplay (char filename[],char startdate[], char enddate[])
 	  temp[strlen (temp) - 10] = '\0';
 	  ptr[ind2++] = temp;
 	}
+	  
       //Reading and adjsuting year line data.
       if (counter == 7)
 	{
@@ -147,6 +144,7 @@ readFileandFullDisplay (char filename[],char startdate[], char enddate[])
 	  temp[strlen (temp) - 9] = '\0';
 	  ptr[ind2++] = temp;
 	}
+	  
       //Reading and adjusting weekday line data.
       if (counter == 8)
 	{	
@@ -154,6 +152,7 @@ readFileandFullDisplay (char filename[],char startdate[], char enddate[])
 	  temp[strlen (temp) - 10] = '\0';
 	  ptr[ind2++] = temp;
 	}
+	  
       //Reading and adjusting start-time line data.
       if (counter == 9)
 	{
@@ -161,25 +160,28 @@ readFileandFullDisplay (char filename[],char startdate[], char enddate[])
 	  temp[strlen (temp) - 10] = '\0';
 	  ptr[ind2++] = temp;
 	}
+	  
       //Reading and adjusting end-time line data.
       if (counter == 10)
 	{
 	  temp = apr[ind1] + 13;
 	  temp[strlen (temp) - 8] = '\0';
 	  ptr[ind2++] = temp;
-	  counter = -1;	  //Resetting counter for the next event to read.
+	  counter = -1;	
 	}
-      ++counter; //Incrementing counter line by line.
-      ++ind1;	//Incrementing 2D array index line by line.
+      ++counter; 
+      ++ind1;
     }
    
   
-    fclose (file); //Closing file after finishing reading.
-    fullSortDisplay (ptr, startdate, enddate); //Displaying file components.
+    fclose (file); 
+    fullSortDisplay (ptr, startdate, enddate);
 }
 
+
 /* Function to count the number of lines in the file without the 2 tags between
-   each event or at the beginning or end of the file. */
+ * each event or at the beginning or end of the file.
+ */
 static int NumberofLines(char *arr[]){
     
     int ind_counter = 0;
@@ -337,8 +339,7 @@ static void Strlen_Year(long int ye){
 }
 
 //Function to display dashes.
-static void
-displayDashes ()
+static void displayDashes ()
 {
   printf("\n");
   for(long int i = 0; i < Strlen_M_Y_DW_D; ++i)
@@ -364,10 +365,10 @@ compare (const void *str1, const void *str2)
 //Function to store the given start date day and month values.
 static void adjustStartDate(char startdate[], char daySt[], char monthSt[]) {
 
-int ind = 0, ind2 = 0; //Array indexes.
-int counter = 0; //Counter for loop control.
+int ind = 0, ind2 = 0; 
+int counter = 0; 
 
-//Storing the month.
+
 for(int i = 0; i < strlen(startdate); ++i){
    if(startdate[i] == '/') {
    ind = i + 1;
@@ -382,9 +383,9 @@ for(int i = 0; i < strlen(startdate); ++i){
 --ind;
 ind2 = 0;
 counter = 0;
-int ind3 = 0; //Array index.
+int ind3 = 0; 
 
-//Storing the day.
+
 for(int j = ind; j < (strlen(startdate)); ++j){
    if(startdate[j] == '/'){
       ind3 = j + 1;
@@ -401,10 +402,10 @@ for(int j = ind; j < (strlen(startdate)); ++j){
 //Function to store the needed end date day and month.
 static void adjustEndDate(char enddate[], char dayEn[], char monthEn[]){
 
-int ind = 0, ind2 = 0; //Array indexes.
-int counter = 0; //Counter for loop control.
+int ind = 0, ind2 = 0; 
+int counter = 0; 
 
-//Storing the month.
+
 for(int i = 0; i < strlen(enddate); ++i){
    if(enddate[i] == '/') {
     ind = i + 1;
@@ -422,7 +423,7 @@ ind2 = 0;
 counter = 0;
 int ind3 = 0;// Array index.
 
-//Storing the day.
+
 for (int j = ind; j < (strlen(enddate)); ++j){
    if(enddate[j] == '/'){
       ind3 = j + 1;
@@ -441,20 +442,20 @@ static void DataOutput(char *Combined_Sorted_Month_Day[],char* arr[],
 char tempArr2 [MAX_EVENTS][MAX_CHARinDATE],
 char tempArr3[MAX_EVENTS][MAX_CHARinDATE]){
  
-  /* Storing incorrect extra data in the last slots for month and day in the 
-     agray of events to avoid logical errors when reading the data for the latest
-     egents in the file that might get skipped while reading. */
+  /** 
+   *Storing incorrect extra data in the last slots for month and day in the 
+   *agray of events to avoid logical errors when reading the data for the latest
+   *egents in the file that might get skipped while reading. 
+   */
   arr[NumberofLines(arr) + 4] = "13";
   arr [NumberofLines(arr) + 3] = "32";
   
-  int ind3 = 4;	     //Setting the index for the first date index in the array.
-  int ind2 = 0;	    //Index for sorted arrays.
-  int counter = 0; //Counter for merging same-day events data.
-  int counter2 = 0; /* A Counter to make sure a new line isn't printed before the 
-                       first event. */
+  int ind3 = 4;	
+  int ind2 = 0;	    
+  int counter = 0; 
+  int counter2 = 0; 
   
-  int counter3 = 0; /* A Counter to make sure a new line isn't printed after the
-                       last event is printed. */
+  int counter3 = 0; 
  
       while(Combined_Sorted_Month_Day[ind2] != NULL && arr[ind3] != NULL)
 
@@ -487,18 +488,16 @@ char tempArr3[MAX_EVENTS][MAX_CHARinDATE]){
           arr, tempArr2,tempArr3)) printf("\n");
 
 	  if (arr[ind3] != NULL)
-	  ind3 += 9; /* Incrementing the index of the main array storing the file 
-	                data to the next event's month. */
+	  ind3 += 9; 
 	  
 	  if (arr[ind3] == NULL)
 	    {
-	      break;  //Avoiding NUll repetitive checkups.
+	      break;  
 	    }
 	}
 
      if(arr[ind3] != NULL)
-          ind3 += 9;  /*Incrementing the index of the main array storing the 
-                        file data to the next event's month. */
+          ind3 += 9;  
         
       if (arr[ind3 + 9] == NULL)
 	{
@@ -514,19 +513,15 @@ static int LinesNumberofDailyEvents(char *Combined_Sorted_Month_Day[],char* arr[
 char tempArr2[MAX_EVENTS][MAX_CHARinDATE],
 char tempArr3[MAX_EVENTS][MAX_CHARinDATE]){
     
-  /* Storing incorrect extra data in the last slots for month and day in the 
-     array of events to avoid logical errors when reading the data for the latest
-     events in the file that might get skipped while reading. */
+ 
   arr[NumberofLines(arr) + 4] = "13";
   arr [NumberofLines(arr) + 3] = "32";
   
-  int ind3 = 4;	     //Setting the index for the first date index in the array.
-  int ind2 = 0;	    //Index for sorted arrays.
-  int counter = 0; //Counter for merging same-day events data.
-  int counter2 = 0; /* A Counter to make sure a new line isn't printed before the 
-                       first event. */
-  int counter3 = 0; /* A Counter to make sure a new line isn't printed after the
-                       last event is printed. */
+  int ind3 = 4;	
+  int ind2 = 0;	
+  int counter = 0; 
+  int counter2 = 0; 
+  int counter3 = 0; 
 
       while (Combined_Sorted_Month_Day[ind2] != NULL && arr[ind3] != NULL)
 
@@ -546,17 +541,15 @@ char tempArr3[MAX_EVENTS][MAX_CHARinDATE]){
       
 
 	  if (arr[ind3] != NULL)
-	  ind3 += 9; /* Incrementing the index of the main array storing the file 
-	                data to the next event's month. */
+	  ind3 += 9; 
 	  
 	  if (arr[ind3] == NULL)
 	    {
-	      break;	//Avoiding NUll repetitive checkups.
+	      break;
 	    }
 	}
 	  if(arr[ind3] != NULL)
-      ind3 += 9;  /* Incrementing the index of the main array storing the 
-                     file data to the next event's month. */
+      ind3 += 9;  
         
       if (arr[ind3 + 9] == NULL)
 	{
@@ -565,47 +558,40 @@ char tempArr3[MAX_EVENTS][MAX_CHARinDATE]){
 	      counter = 0;
 	}
   }
-  return counter3; //Return the number of lines.
+  return counter3; 
 }
 
 //Function to sort display functions in the needed format.
-static void
-fullSortDisplay (char *arr[], char startdate[], char enddate[])
+static void fullSortDisplay (char *arr[], char startdate[], char enddate[])
 {
-  int ind1 = 0, ind2 = 0, ind3 = 0, ind4 = 0; //Array indexes.
-  char *day[MAX_EVENTS];      //Array to store unsorted days.
-  char *month[MAX_EVENTS];  //Array to store unsorted months.
-  int counter = 0;	//Counter to count the number of elements in arrays.
-  char Non_Sorted_Month_Day[MAX_CHARinDATE]; /*Array to store the concatenated
-                                               month and day value for each event. */
+  int ind1 = 0, ind2 = 0, ind3 = 0, ind4 = 0; 
+  char *day[MAX_EVENTS];     
+  char *month[MAX_EVENTS];  
+  int counter = 0;	
+  char Non_Sorted_Month_Day[MAX_CHARinDATE]; 
   
-  char *Combined_Sorted_Month_Day[MAX_EVENTS];	/* Array to store the sorted 
-                                                   combined data of months sand days. */
+  char *Combined_Sorted_Month_Day[MAX_EVENTS];	
   
-  char *Sorted_Month[MAX_EVENTS];  //Array to store sorted months.
+  char *Sorted_Month[MAX_EVENTS]; 
   
-  char tempArr[MAX_EVENTS][MAX_CHARinLINE];  /* Array to temporarly re-store the 
-                                                unsorted and combined days and months.*/
+  char tempArr[MAX_EVENTS][MAX_CHARinLINE];  
   
-  char tempArr2[MAX_EVENTS][MAX_CHARinDATE]; /* Array to temporarly store the 
-                                                sorted days. */
+  char tempArr2[MAX_EVENTS][MAX_CHARinDATE]; 
   
-  char tempArr3[MAX_EVENTS][MAX_CHARinDATE]; /* Array to temporarly sotre the 
-                                                combined and sorted days and months. */
+  char tempArr3[MAX_EVENTS][MAX_CHARinDATE]; 
 
-  char tempLast_Event[MAX_CHARinDATE][MAX_CHARinDATE]; /* Array to store the last
-                                                          event day and month. */
+  char tempLast_Event[MAX_CHARinDATE][MAX_CHARinDATE]; 
 
-char daySt[100] ={}; //Array to store the specifed start date day needed for the events.
-char monthSt[100] = {};//Array to store the specified needed start date month for the events.
-char dayEn[100] = {}; //Array to sotre the specified needed end date day for the events.
-char monthEn[100] = {}; //Array to store the specifed needed end date month for the events. 
+char daySt[100] ={};
+char monthSt[100] = {};
+char dayEn[100] = {}; 
+char monthEn[100] = {}; 
 
-adjustStartDate(startdate, daySt, monthSt); //Storing the needed start date day and month. 
-adjustEndDate(enddate, dayEn, monthEn); //Storing the needed end date day and month.
+adjustStartDate(startdate, daySt, monthSt); 
+adjustEndDate(enddate, dayEn, monthEn); 
 ind1= ind2 =0;
 
-  //Storing the unsorted months and days for the specified given date range.
+  
   while (arr[ind1] != NULL)
 
   {   
@@ -629,16 +615,14 @@ ind1= ind2 =0;
          ind2 += 9;
   }
 
-  //In case no events fall between the given dates, the program is stopped immediately.
+  
   if(month[0] == NULL || day[0] == NULL) 
      
-     exit(0); // Terminating the program.
+     exit(0); 
 
 
-  ind1 = 0; //Setting array index to zero.
+  ind1 = 0; 
 
-  /* Joining both month and day of each event in a single array index 
-     for sorting. */
   while (day[ind1] != NULL && month[ind1] != NULL)
     {
      sprintf (Non_Sorted_Month_Day, "%s%s", month[ind1], day[ind1]);
@@ -647,19 +631,18 @@ ind1= ind2 =0;
      
      if (day[ind1 + 1] == NULL && month[ind1 + 1] == NULL)
      
-          //Storing last event's month and day.
+          
          strcpy (tempLast_Event[0], tempArr[ind1]);
  
      ++ind1;
     }
 
 
-  //Sorting the combined days and months data array.
   qsort (Combined_Sorted_Month_Day, ind1, sizeof (char *), compare);
 
   ind1 = 0;	//Setting array index to zero.
 
-  //Storing the sorted days.
+
   while (Combined_Sorted_Month_Day[ind1] != NULL)
     {
 
@@ -667,30 +650,32 @@ ind1= ind2 =0;
       ++ind1;
     }
 
-  ind1 = 0;	//Resetting array index to zero.
+  ind1 = 0;
 
-  //Storing the sorted day and month concatenated.
+
   while (Combined_Sorted_Month_Day[ind1] != NULL)
     {
       strcpy (tempArr3[ind1], Combined_Sorted_Month_Day[ind1]);    
       ++ind1;
     }
    
-  ind1 = 0 ;  //Resetting array index to zero.
+  ind1 = 0 ;  
 
-  //Storing the sorted months.
+  
   while (Combined_Sorted_Month_Day[ind1] != NULL)
     {
         
-    //Deleting the day number in the combined day and month array.
+
     Combined_Sorted_Month_Day[ind1][strlen (Combined_Sorted_Month_Day[ind1])
     - 2] = '\0'; 
     ++ind1;
 
     }
 
-    //Conting the number of lines within each day.
+   
     LinesNumberofDailyEvents(Combined_Sorted_Month_Day,arr,tempArr2,tempArr3);
-    //Displaying the data in the desired order.
+    
     DataOutput(Combined_Sorted_Month_Day,arr,tempArr2,tempArr3);
- }
+
+}
+
